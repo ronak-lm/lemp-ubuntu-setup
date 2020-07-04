@@ -14,7 +14,7 @@ sudo ufw enable             # enables firewall
 
 Check firewall rules by typing `sudo ufw status`. It should return this:
 
-```bash
+```
 Status: active
 
 To                         Action      From
@@ -32,8 +32,10 @@ Open the file:
 ```bash
 sudo nano /etc/nginx/nginx.conf
 ```
+
 Find the `server_names_hash_bucket_size` directive and remove the `#` symbol to uncomment the line:
-```bash
+
+```
 ...
 http {
     ...
@@ -42,15 +44,18 @@ http {
 }
 ...
 ```
+
 Save and close when you are finished.
 
 ## 2. Install MySQL
 
 Run the following command:
+
 ```bash
 sudo apt-get install mysql-server
 sudo mysql_secure_installation
 ```
+
 1. When asked to enable `VALIDATE PASSWORD COMPONENT` select no.
 2. After that, enter the DB password that you want to use.
 3. Now it'll ask you 4 questions about removing dummy data. Enter 'Yes' for all of them.
@@ -60,7 +65,9 @@ Right now MySQL root user can be accessed without a password. To fix this first 
 ```bash
 sudo mysql -u root -p
 ```
+
 This will open the MySQL prompt. Run this query and replace the password in it with the password you want to keep for your root MySQL user:
+
 ```sql
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'YOUR_PASSWORD_HERE';
 FLUSH PRIVILEGES;
@@ -69,10 +76,13 @@ FLUSH PRIVILEGES;
 ### Adding More Users
 
 To add another user to your database, you can run this query in MySQL prompt:
+
 ```sql
 CREATE USER 'MY_USER_NAME'@'localhost' IDENTIFIED BY 'MY_PASSWORD';
 ```
+
 To give the user permissions for a particular database:
+
 ```sql
 GRANT ALL PRIVILEGES ON MY_DATABASE_NAME.* TO 'MY_USER_NAME'@'localhost' WITH GRANT OPTION;
 ```
@@ -80,13 +90,17 @@ GRANT ALL PRIVILEGES ON MY_DATABASE_NAME.* TO 'MY_USER_NAME'@'localhost' WITH GR
 ## 3. Install PHP
 
 Run this command to install PHP and Composer:
+
 ```bash
 sudo apt-get install php-fpm php-mysql php-cli composer
 ```
+
 Now we need to make a slight configuration change:
+
 ```bash
-sudo nano /etc/php/7.X/fpm/php.ini
+sudo nano /etc/php/7.X/fpm/php.ini # Replace X with your version of PHP
 ```
+
 In this file, look for `cgi.fix_pathinfo`. It should be commented out using `;`
 Remove the comment and set the value to 0: `cgi.fix_pathinfo=0`
 
@@ -99,8 +113,9 @@ Apart from this, there are some more useful properties which you can configure a
 5. `max_file_uploads = 20`
 
 Once done, restart PHP processor by typing:
+
 ```bash
-sudo systemctl restart php7.X-fpm
+sudo systemctl restart php7.X-fpm # Replace X with your version of PHP
 ```
 
 ## 4. Setting up Nginx Server Blocks
@@ -114,6 +129,7 @@ sudo mkdir /var/www/example.com
 sudo chown -R $USER:$USER /var/www/example.com
 sudo chmod -R 755 /var/www/example.com
 ```
+
 Next, we'll make a server block by typing this command:
 
 ```bash
@@ -122,7 +138,7 @@ sudo nano /etc/nginx/sites-available/example.com
 
 In case of an HTML/Javascript web application enter this and save:
 
-```bash
+```
 server {
         listen 80;
         listen [::]:80;
@@ -140,7 +156,7 @@ server {
 
 In case of a PHP-Laravel application, enter this and save:
 
-```bash
+```
 server {
     listen 80;
     listen [::]:80;
@@ -202,6 +218,7 @@ sudo ln -s /usr/share/phpmyadmin /var/www/html
 sudo ln -s /usr/share/phpmyadmin /var/www
 sudo mv phpmyadmin phpmyadmin.example.com
 ```
+
 **Note:** For using it in `http://phpmyadmin.example.com`, you will have to create another server block by following the instructions in step 4 above.
 
 ### Securing phpMyAdmin with a Password
@@ -214,7 +231,7 @@ openssl passwd 'YOUR_PASSWORD_HERE'
 
 **Note:** Your password cannot be longer than 8 characters.
 
-After you run this command, you will get  an encrypted version of the password like this:
+After you run this command, you will get an encrypted version of the password like this:
 
 ```
 hbfHQTlXYYSOo
@@ -278,6 +295,7 @@ server {
     . . .
 }
 ```
+
 Save and close the file when you’re done. To activate our new authentication gate, we must restart the web server:
 
 ```bash
