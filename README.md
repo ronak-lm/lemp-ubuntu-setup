@@ -167,7 +167,7 @@ server {
     server_name example.com www.example.com;
 
     location / {
-        try_files $uri $uri/ =404;
+        try_files $uri $uri/ /index.php?$query_string;
     }
 
     location ~ \.php$ {
