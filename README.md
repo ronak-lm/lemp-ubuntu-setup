@@ -136,7 +136,7 @@ Next, we'll make a server block by typing this command:
 sudo nano /etc/nginx/sites-available/example.com
 ```
 
-In case of an HTML/Javascript web application enter this and save:
+In case of a simple HTML or non Laravel PHP application enter this and save:
 
 ```
 server {
@@ -154,7 +154,25 @@ server {
 }
 ```
 
-In case of a PHP-Laravel application, enter this and save:
+In case of a Vue/React/Angular or any other Javascript SPA (Single Page Application) enter this and save:
+
+```
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/example.com;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name example.com www.example.com;
+
+        location / {
+                try_files $uri $uri/ /index.html;
+        }
+}
+```
+
+In case of a Laravel application, enter this and save:
 
 ```
 server {
