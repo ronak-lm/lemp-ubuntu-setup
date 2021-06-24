@@ -213,6 +213,12 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
+Once you have created all the blocks you need, you can disable the default block using:
+
+```bash
+sudo unlink /etc/nginx/sites-enabled/default
+```
+
 ## 5. Install & Secure phpMyAdmin
 
 Download and install using this command:
