@@ -61,18 +61,15 @@ sudo mysql_secure_installation
 2. After that, enter the DB password that you want to use.
 3. Now it'll ask you 4 questions about removing dummy data. Enter 'Yes' for all of them.
 
-Right now MySQL root user can be accessed without a password. To fix this first open MySQL prompt and when asked for the password, leave it blank and press enter:
+Now you can access MySQL using:
 
 ```bash
-sudo mysql -u root -p
+sudo mysql
 ```
 
-This will open the MySQL prompt. Run this query and replace the password in it with the password you want to keep for your root MySQL user:
+Notice that you didn’t need to provide a password to connect as the root user, even though you have defined one. That is because the default authentication method for the administrative MySQL user is `unix_socket instead` of `password`. Even though this might look like a security concern at first, it makes the database server more secure because the only users allowed to log in as the root MySQL user are the system users with sudo privileges connecting from the console or through an application running with the same privileges.
 
-```sql
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'YOUR_PASSWORD_HERE';
-FLUSH PRIVILEGES;
-```
+It’s best to have dedicated user accounts with less expansive privileges set up for every database
 
 ### Adding More Users
 
