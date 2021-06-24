@@ -8,7 +8,8 @@ Run the following commands:
 ```bash
 sudo apt-get update
 sudo apt-get install nginx
-sudo ufw allow 'Nginx Full' # adds to firewall
+sudo ufw allow 'Nginx Full' # adds nginx to firewall
+sudo ufw allow 'OpenSSH'    # adds ssh to firewall
 sudo ufw enable             # enables firewall
 ```
 
