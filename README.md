@@ -40,13 +40,13 @@ Find the `server_names_hash_bucket_size` directive and remove the `#` symbol to 
 ...
 http {
     ...
-    server_names_hash_bucket_size 64;
+    server_names_hash_bucket_size 128;
     ...
 }
 ...
 ```
 
-Save and close when you are finished.
+Save and close when you are finished. Doing this allows you to use longer domain names.
 
 ## 2. Install MySQL
 
