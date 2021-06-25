@@ -87,10 +87,11 @@ GRANT ALL PRIVILEGES ON MY_DATABASE_NAME.* TO 'MY_USER_NAME'@'localhost' WITH GR
 
 ## 3. Install PHP
 
-Run this command to install PHP and Composer:
+Run this command to install PHP, some PHP extensions and composer. You can add/remove extensions as per your requirements:
 
 ```bash
-sudo apt-get install php-fpm php-mysql php-cli composer
+sudo apt-get install php-fpm php-mysql php-cli php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc php-zip composer
+
 ```
 
 Now we need to make a slight configuration change:
