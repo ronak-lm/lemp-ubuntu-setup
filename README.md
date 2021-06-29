@@ -125,7 +125,7 @@ First start by making a folder with the right ownership and permissions:
 
 ```bash
 sudo mkdir /var/www/example.com
-sudo chown -R $USER:$USER /var/www/example.com
+sudo chown -R www-data:www-data /var/www/example.com
 sudo chmod -R 755 /var/www/example.com
 ```
 
