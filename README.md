@@ -135,7 +135,7 @@ Next, we'll make a server block by typing this command:
 sudo nano /etc/nginx/sites-available/example.com
 ```
 
-In case of a simple HTML or non Laravel PHP application enter this and save:
+In case of a simple HTML website or Vue/React/Angular/SPA project enter this and save:
 
 ```
 server {
@@ -143,17 +143,21 @@ server {
         listen [::]:80;
 
         root /var/www/example.com;
-        index index.html index.htm index.nginx-debian.html;
+        index index.html index.htm;
 
         server_name example.com www.example.com;
 
         location / {
                 try_files $uri $uri/ =404;
         }
+	
+        location ~ /\.ht {
+                deny all;
+        }
 }
 ```
 
-In case of a Vue/React/Angular or any other Javascript SPA (Single Page Application) enter this and save:
+In case of a simple PHP application enter this and save:
 
 ```
 server {
@@ -161,12 +165,21 @@ server {
         listen [::]:80;
 
         root /var/www/example.com;
-        index index.html index.htm index.nginx-debian.html;
+        index index.php index.html index.htm;
 
         server_name example.com www.example.com;
 
         location / {
-                try_files $uri $uri/ /index.html;
+                try_files $uri $uri/ =404;
+        }
+	
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/run/php/php7.X-fpm.sock;
+        }
+	
+        location ~ /\.ht {
+                deny all;
         }
 }
 ```
@@ -179,7 +192,7 @@ server {
     listen [::]:80;
 
     root /var/www/example.com/public;
-    index index.php index.html index.htm index.nginx-debian.html;
+    index index.php index.html index.htm;
 
     server_name example.com www.example.com;
 
@@ -197,7 +210,35 @@ server {
     }
 }
 ```
-**Note:** Make sure to replace the 7.X in in the above with your version of PHP.
+
+In case of a WordPress website, enter this and save:
+
+```
+server {
+    listen 80;
+    listen [::]:80;
+
+    root /var/www/example.com;
+    index index.php index.html index.htm;
+
+    server_name example.com www.example.com;
+
+    location / {
+        try_files $uri $uri/ /index.php$args;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php7.X-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+```
+
+**Note:** Make sure to replace the 7.X in in all the above with your version of PHP.
 
 Now to enable this file, run this command:
 
