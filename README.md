@@ -34,12 +34,13 @@ Open the file:
 sudo nano /etc/nginx/nginx.conf
 ```
 
-Find the `server_names_hash_bucket_size` directive and remove the `#` symbol to uncomment the line:
+Find the `server_names_hash_bucket_size` directive and remove the `#` symbol to uncomment the line. Also add `client_max_body_size` with your desired request size limit.
 
 ```
 ...
 http {
     ...
+    client_max_body_size 64M;
     server_names_hash_bucket_size 128;
     ...
 }
