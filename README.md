@@ -108,7 +108,7 @@ Apart from this, there are some more useful properties which you can configure a
 1. `memory_limit = 128M`
 2. `max_execution_time = 30`
 3. `post_max_size = 8M`
-4. `upload_max_size = 2M`
+4. `upload_max_filesize = 2M`
 5. `max_file_uploads = 20`
 
 Once done, restart PHP processor by typing:
