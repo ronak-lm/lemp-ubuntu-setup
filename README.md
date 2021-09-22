@@ -136,7 +136,7 @@ Next, we'll make a server block by typing this command:
 sudo nano /etc/nginx/sites-available/example.com
 ```
 
-In case of a simple HTML website or Vue/React/Angular/SPA project enter this and save:
+In case of a simple HTML website enter this and save:
 
 ```
 server {
@@ -150,6 +150,28 @@ server {
 
         location / {
                 try_files $uri $uri/ =404;
+        }
+	
+        location ~ /\.ht {
+                deny all;
+        }
+}
+```
+
+In case of a Vue/React/Angular or SPA app with a router enter this and save:
+
+```
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/example.com;
+        index index.html index.htm;
+
+        server_name example.com www.example.com;
+
+        location / {
+                try_files $uri $uri/ /index.html;
         }
 	
         location ~ /\.ht {
